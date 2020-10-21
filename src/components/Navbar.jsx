@@ -10,8 +10,8 @@ export default function Navbar() {
         Home
       </Link>
 
-      <Link as={ReactLink} to="/register">
-        Register
+      <Link as={ReactLink} to="/Signup">
+        Signup
       </Link>
 
       <Link as={ReactLink} to="/login">

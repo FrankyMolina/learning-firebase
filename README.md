@@ -1,11 +1,12 @@
-##This is an empty template for research purposes. 
-#####(AKA empty project to clone and experiment with things)
+## Project to learn firebase.
+
 
 
 Dependencies:
 * React
 * react-router-dom (basic)
 * Chakra-ui (fast styling)
+* firebase
 
 
 Franky Molina Dev :)

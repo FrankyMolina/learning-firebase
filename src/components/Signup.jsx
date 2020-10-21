@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+//auth context
+import { useAuth } from '../api/auth/AuthProvider';
+
 import {
   Flex,
   FormControl,
@@ -10,34 +13,39 @@ import {
 } from '@chakra-ui/core';
 
 //EMPTY REGISTER STATE
-const emptyRegisterState = {
+const emptySignupState = {
   email: '',
   password: '',
 };
 
 export default function Register() {
   //REGISTER STATE
-  const [registerState, setRegisterState] = useState(emptyRegisterState);
+  const [signupState, setSignupState] = useState(emptySignupState);
+
+  //our function signup from our auth context
+  const { signup } = useAuth();
+
+  //INPUT SUBMIT ------- create some kind of error handling here, making this an ASYNC function and creating a new state for errors
+  function handleRegisterSubmit(ev) {
+    ev.preventDefault();
+
+    //lets signup with our imported function from auth context
+    signup(signupState.email, signupState.password);
+    setSignupState(emptySignupState);
+  }
 
   //INPUT CHANGE
   function handleInputChange(ev) {
     const { id, value } = ev.target;
 
-    setRegisterState({
-      ...registerState,
+    setSignupState({
+      ...signupState,
       [id]: value,
     });
   }
 
-  //INPUT SUBMIT
-  function handleRegisterSubmit(ev) {
-    ev.preventDefault();
-
-    setRegisterState(emptyRegisterState);
-  }
-
   //REGISTER STATE DESTRUCTURING FOR INPUT VALUES
-  const { email, password } = registerState;
+  const { email, password } = signupState;
 
   return (
     <Flex justify="center">
@@ -63,7 +71,7 @@ export default function Register() {
         </FormControl>
 
         <Button type="submit" variantColor="teal" variant="ghost">
-          Register
+          Signup
         </Button>
       </Flex>
     </Flex>
