@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useAuth } from '../api/auth/AuthProvider';
+import { useHistory } from 'react-router-dom';
 
 import {
   Flex,
@@ -16,8 +18,25 @@ const emptyLoginState = {
 };
 
 export default function Login() {
+  //history push
+  const history = useHistory();
   //LOGIN STATE
   const [loginState, setLoginState] = useState(emptyLoginState);
+
+  //our login function from our auth context
+  const { login } = useAuth();
+  //INPUT SUBMIT
+  async function handleLoginSubmit(ev) {
+    ev.preventDefault();
+
+    try {
+      await login(loginState.email, loginState.password);
+      history.push('/private-page');
+      setLoginState(emptyLoginState);
+    } catch {
+      console.log('something went wrong');
+    }
+  }
 
   //INPUT CHANGE
   function handleInputChange(ev) {
@@ -27,13 +46,6 @@ export default function Login() {
       ...loginState,
       [id]: value,
     });
-  }
-
-  //INPUT SUBMIT
-  function handleLoginSubmit(ev) {
-    ev.preventDefault();
-
-    setLoginState(emptyLoginState);
   }
 
   //LOGIN STATE DESTRUCTURING FOR INPUT VALUES
